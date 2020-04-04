@@ -1,6 +1,6 @@
 'use strict';
 
-const domain = ["บริบท", "สิ่งพิมพ์", "วิทยุ", "ภาพยนตร์", "โทรทัศน์", "ออนไลน์"];
+const domain = ["deceased", "transferred", "hospitalized","recovered","unknown","0"];
 const range = ["#fddfdf", "#EFEFEF", "#fcf7de", "#defde0", "#def3fd", "#f0defd"];
 const scale = d3.scaleOrdinal()
   .domain(domain)
@@ -15,23 +15,43 @@ const legend = d3.legendColor()
 d3.select(".legend")
   .call(legend);
 
-d3.csv("data.csv", function(error, data) {
+d3.csv("5lab.csv", function(error, data) {
+  console.log("data");
+  console.log(data[0]);
   var list = document.getElementsByTagName("ul")[0];
   for(var i = 0; i < data.length; i++) {
     var item = document.createElement("li");
-    switch(data[i].type) {
-      case "สิ่งพิมพ์": item.className = "type1"; break;
-      case "วิทยุ": item.className = "type2"; break;
-      case "ภาพยนตร์": item.className = "type3"; break;
-      case "โทรทัศน์": item.className = "type4"; break;
-      case "ออนไลน์": item.className = "type5"; break;
+    switch(data[i].patientstatus) {
+      case "recovered": item.className = "type1"; break;
+      case "hospitalized": item.className = "type2"; break;
+      case "deceased": item.className = "type3"; break;
+      case "transferred": item.className = "type4"; break;
+      case "unknown": case "0": case 0: item.className = "type3"; break;
       default: break;
     }
 
+    var flagEmoji = "";
+
+    if (data[i].nationality) {
+      switch(data[i].nationality) {
+        case "Thai": flagEmoji = "🇹🇭"; break;
+        case "Chinese": flagEmoji = "🇨🇳"; break;
+        case "Belgian": flagEmoji = "🇧🇪"; break;
+        case "British": flagEmoji = "🏴󠁧󠁢󠁥󠁮󠁧󠁿󠁧󠁿"; break;
+        case "German": flagEmoji = "🇩🇪"; break;
+        case "Japanese": flagEmoji = "🇯🇵"; break;
+        case "Pakistan": flagEmoji = "🇵🇰"; break;
+        case "Singaporean": flagEmoji = "🇸🇬"; break;
+        default: break;
+      }
+    }
+
     var htmlString = "<div>";
-    htmlString += "<div class='time'>พ.ศ. " + data[i].time + "</div>";
-    htmlString += "<div class='text'>" + data[i].text + "</div>";
-    if (data[i].image) { htmlString += "<div class='image-wrapper'><img src='images/" + data[i].image + "' /></div>"; }
+    htmlString += "<div class='time'>" + data[i].date + "</div>";
+    htmlString += "<div class='text'><div class='flag'>"+flagEmoji+"</div>" + data[i].note + "</div>";
+    if (data[i].source) { htmlString += "<div class='source'>ref: <a target='_blank' href='"+data[i].source+"'>"+data[i].source+"</a></div>"; };
+    htmlString += ""; 
+    htmlString += "<div class='image-wrapper'><img src='https://ichef.bbci.co.uk/news/660/cpsprodpb/9147/production/_110819173_84301324_772297283292227_1576464872663678976_n.jpg' /></div>"; 
     htmlString += "</div>";
     item.innerHTML = htmlString;
 

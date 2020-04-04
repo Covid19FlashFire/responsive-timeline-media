@@ -1,29 +1,28 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- for Google -->
-  <meta name="description" content="Responsive timeline with some animations for important events related to media in Thailand. The event categories are color-coded." />
-  <meta name="keywords" content="ไทม์ไลน์, สื่อ, ไทย, timeline, visualization, media, thailand, infographic, interactive, data journalism" />
-  <meta name="author" content="Boonmee Lab" />
-
-  <!-- for Facebook -->
-  <meta property="og:title" content="Timeline of Media Events in Thailand" />
-  <meta property="og:type" content="article" />
-  <meta property="og:image" content="http://puripant.ruchikachorn.com/responsive-timeline-media/screenshot.png" />
-  <meta property="og:url" content="http://puripant.ruchikachorn.com/responsive-timeline-media/" />
-  <meta property="og:description" content="Responsive timeline with some animations for important events related to media in Thailand. The event categories are color-coded." />
-
-  <!-- for Twitter -->
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Timeline of Media Events in Thailand" />
-  <meta name="twitter:description" content="Responsive timeline with some animations for important events related to media in Thailand. The event categories are color-coded." />
-  <meta name="twitter:image" content="http://puripant.ruchikachorn.com/responsive-timeline-media/screenshot.png" />
-
-  <title>Timeline of Media Events in Thailand</title>
+  <title>Timeline of COVID-19 Events in Thailand</title>
   <link href="https://fonts.googleapis.com/css?family=Athiti:300,400,500,600,700&amp;subset=thai" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    .flag {
+      font-size:24px;
+    }
+    .source {
+      word-wrap: break-word;
+    }
+    .image-wrapper {
+      top:20px !important;
+      bottom:auto !important;
+    }
+    .swatch {
+      width: 70px !important;
+    }
+    .legend {
+          width: 450px;
+    }
+  </style>
 </head>
 
 <body>
@@ -32,8 +31,8 @@
     <div class="container">
       <!-- <div class="logo boonmeelab float"></div> -->
       <h1 class="bold">ไทม์ไลน์</h1>
-      <h1 class="highlight tight bold">สื่อไทย</h1>
-      <h4 class="highlight">Media Timeline</h4>
+      <h1 class="highlight tight bold">โควิดไทย</h1>
+      <h4 class="highlight">COVID-19 Timeline</h4>
       <br />
       <svg class="legend" width="270" height="40"></svg>
     </div>
@@ -61,7 +60,7 @@
   </section>
 
   <section class="article">
-    <div class="container" style="text-align:center;">
+    <div class="container" style="text-align:center;display:none">
       <!-- <h1 class="highlight">จะเปลี่ยนหรือจะไป!!</h1>
       <h2>โจทย์ท้าทายใหม่ของไทย</h1>
       <p>…</p>
