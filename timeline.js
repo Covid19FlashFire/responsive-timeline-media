@@ -1,5 +1,7 @@
 'use strict';
 
+import flags from './flags.js'
+
 const domain = ["deceased", "transferred", "hospitalized","recovered","unknown","0"];
 const range = ["#fddfdf", "#EFEFEF", "#fcf7de", "#defde0", "#def3fd", "#f0defd"];
 const scale = d3.scaleOrdinal()
@@ -32,17 +34,10 @@ d3.csv("5lab.csv", function(error, data) {
 
     var flagEmoji = "";
 
-    if (data[i].nationality) {
-      switch(data[i].nationality) {
-        case "Thai": flagEmoji = "🇹🇭"; break;
-        case "Chinese": flagEmoji = "🇨🇳"; break;
-        case "Belgian": flagEmoji = "🇧🇪"; break;
-        case "British": flagEmoji = "🏴󠁧󠁢󠁥󠁮󠁧󠁿󠁧󠁿"; break;
-        case "German": flagEmoji = "🇩🇪"; break;
-        case "Japanese": flagEmoji = "🇯🇵"; break;
-        case "Pakistan": flagEmoji = "🇵🇰"; break;
-        case "Singaporean": flagEmoji = "🇸🇬"; break;
-        default: break;
+    if (data[i].nationality && data[i].nationality !== "0") {
+      const nationality = data[i].nationality.split(",")
+      for (let i = 0; i < nationality.length; i++) {
+        flagEmoji += flags[nationality[i].trim()]
       }
     }
 
@@ -68,15 +63,26 @@ d3.csv("5lab.csv", function(error, data) {
     return (rect.bottom - 100 > 0 && rect.top + 100 < (window.innerHeight || document.documentElement.clientHeight));
   }
 
+  // Initialize with three cards
+  let lazyIndex = 3
+  let initialize = false
+
   function callbackFunction() {
-    for (var i = 0; i < items.length; i++) {
-      if (isElementInViewport(items[i])) {
-        items[i].classList.add("in-view");
-      }
+    if (initialize && isElementInViewport(items[lazyIndex])) {
+      items[lazyIndex].classList.add("in-view");
+      lazyIndex += 1;
     }
   }
 
-  window.addEventListener("load", callbackFunction);
+  function initial() {
+    for (let i = 0; i < lazyIndex; i++) {
+      items[i].classList.add("in-view");
+    }
+
+    initialize = true
+  }
+
+  window.addEventListener("load", initial);
   window.addEventListener("resize", callbackFunction);
   window.addEventListener("scroll", callbackFunction);
 });
