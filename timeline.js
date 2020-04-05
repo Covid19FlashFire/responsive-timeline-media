@@ -2,7 +2,8 @@
 
 import flags from './flags.js'
 
-const domain = ["deceased", "transferred", "hospitalized","recovered","unknown","0"];
+var items;
+const domain = ["deceased", "transferred", "hospitalized","recovered","unknown","report"];
 const range = ["#fddfdf", "#EFEFEF", "#fcf7de", "#defde0", "#def3fd", "#f0defd"];
 const scale = d3.scaleOrdinal()
   .domain(domain)
@@ -21,14 +22,14 @@ d3.csv("5lab.csv", function(error, data) {
   console.log("data");
   console.log(data[0]);
   var list = document.getElementsByTagName("ul")[0];
-  for(var i = 0; i < data.length; i++) {
+  for(var i = data.length - 1; i >= 0; i--) {
     var item = document.createElement("li");
     switch(data[i].patientstatus) {
-      case "recovered": item.className = "type1"; break;
-      case "hospitalized": item.className = "type2"; break;
-      case "deceased": item.className = "type3"; break;
-      case "transferred": item.className = "type4"; break;
-      case "unknown": case "0": case 0: item.className = "type3"; break;
+      case "deceased": item.className = "type1"; break;
+      case "transferred": item.className = "type2"; break;
+      case "hospitalized": item.className = "type3"; break;
+      case "recovered": item.className = "type4"; break;
+      case "unknown": case "0": case 0: item.className = "type5"; break;
       default: break;
     }
 
@@ -75,6 +76,7 @@ d3.csv("5lab.csv", function(error, data) {
   }
 
   function initial() {
+    console.log("initial");
     for (let i = 0; i < lazyIndex; i++) {
       items[i].classList.add("in-view");
     }
